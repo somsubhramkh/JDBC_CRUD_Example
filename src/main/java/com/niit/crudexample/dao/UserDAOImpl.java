@@ -160,7 +160,30 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	public boolean validate(String username, String password) {
-		// TODO Auto-generated method stub
+		
+		User user = new User();
+		connection = DBConnection.getConnection();
+		String sql = "select * from users where username=? and password=?";
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement(sql);
+			statement.setString(1,username);
+			statement.setString(2,password);
+			ResultSet resultSet =statement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				return true;
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 
